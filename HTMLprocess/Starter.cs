@@ -1,45 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using HtmlAgilityPack;
+﻿using System.Collections.Generic;
+using TitleProcessing;
 
 namespace HTMLprocess
 {
-    internal class Starter : IHendlerHTML
+    internal class Starter
     {
         public static void Run(string[] htmlDoc)
         {
-            string[] strings = htmlDoc;
+            HendlerHTML hendlerHTML = new HendlerHTML();
 
-            ProccessHTML(htmlDoc);
-        }
+            // get useres from HTML 
+            List<string> users = hendlerHTML.ProccessHTML(htmlDoc);
+            LDAP ldap = new LDAP();
 
-        public void ProccessHTML(string[] htmlDoc)
-        {
-            var html = File.ReadAllText("E:\\data.txt", Encoding.UTF8);
-            HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(html);
-
-            List<string> names = new List<string>();
-
-            foreach (HtmlNode vol in doc.DocumentNode.SelectNodes("//tr"))
+            foreach (string user in users )
             {
-                string name
-                    = vol.ChildNodes[1].InnerText.Trim().Replace(
-                        "&nbsp;",
-                        string.Empty);
-
-                names.Add(name);
-
-                Console.WriteLine(name);
+                ldap.GetGroupsByUser(user);
             }
-
-            File.WriteAllText(
-                "E:\\test.txt",
-                string.Join(
-                    names.ToString(),
-                    (char)10));
         }
     }
 }

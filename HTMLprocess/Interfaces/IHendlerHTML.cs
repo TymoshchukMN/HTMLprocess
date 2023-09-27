@@ -1,4 +1,6 @@
-﻿public interface IHendlerHTML
+﻿using System.Collections.Generic;
+
+public interface IHendlerHTML
 {
-    void ProccessHTML(string[] htmlDoc);
+    List<string> ProccessHTML(string[] htmlDoc);
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using HtmlAgilityPack;
 
 namespace HTMLprocess
 {
@@ -10,9 +6,8 @@ namespace HTMLprocess
     {
         public static void Main(string[] args)
         {
-            Starter.;
+            Starter.Run(args);
             Console.ReadKey();
         }
-        
     }
 }
