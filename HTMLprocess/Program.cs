@@ -10,7 +10,9 @@ namespace HTMLprocess
     {
         public static void Main(string[] args)
         {
-            Starter.Run(args);
+            Starter.;
+            Console.ReadKey();
         }
+        
     }
 }

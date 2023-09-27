@@ -6,9 +6,16 @@ using HtmlAgilityPack;
 
 namespace HTMLprocess
 {
-    internal class Starter
+    internal class Starter : IHendlerHTML
     {
         public static void Run(string[] htmlDoc)
+        {
+            string[] strings = htmlDoc;
+
+            ProccessHTML(htmlDoc);
+        }
+
+        public void ProccessHTML(string[] htmlDoc)
         {
             var html = File.ReadAllText("E:\\data.txt", Encoding.UTF8);
             HtmlDocument doc = new HtmlDocument();
@@ -33,8 +40,6 @@ namespace HTMLprocess
                 string.Join(
                     names.ToString(),
                     (char)10));
-
-            Console.ReadKey();
         }
     }
 }
