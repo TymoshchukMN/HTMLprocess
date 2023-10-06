@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TitleProcessing;
+using HTMLprocess.AD;
 
 namespace HTMLprocess
 {
@@ -24,8 +24,6 @@ namespace HTMLprocess
                     members.Add(new GroupMember(user, group));
                 }
             }
-
-           
         }
     }
 }
