@@ -1,22 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TitleProcessing;
 
 namespace HTMLprocess
 {
     internal class Starter
     {
-        public static void Run(string[] htmlDoc)
+        public static void Run()
         {
             HendlerHTML hendlerHTML = new HendlerHTML();
 
-            // get useres from HTML 
-            List<string> users = hendlerHTML.ProccessHTML(htmlDoc);
+            List<string> users = hendlerHTML.ProccessHTML();
+
             LDAP ldap = new LDAP();
 
-            foreach (string user in users )
+            List<GroupMember> members = new List<GroupMember>();
+            foreach (string user in users)
             {
-                ldap.GetGroupsByUser(user);
+                var groups = ldap.GetGroupsByUser(user);
+
+                foreach (string group in groups)
+                {
+                    members.Add(new GroupMember(user, group));
+                }
             }
+
+           
         }
     }
 }

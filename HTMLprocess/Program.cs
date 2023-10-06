@@ -6,7 +6,7 @@ namespace HTMLprocess
     {
         public static void Main(string[] args)
         {
-            Starter.Run(args);
+            Starter.Run();
             Console.ReadKey();
         }
     }

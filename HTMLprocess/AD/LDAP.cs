@@ -12,7 +12,7 @@ using System.DirectoryServices;
 using System.Linq;
 using HTMLprocess.Interfaces;
 
-namespace TitleProcessing
+namespace HTMLprocess.AD
 {
     internal class LDAP : IGetGroupsByUser
     {
@@ -36,51 +36,8 @@ namespace TitleProcessing
 
         #region METHODS
 
-        /// <summary>
-        /// Get users from active directory.
-        /// </summary>
-        /// <param name="currentTitles">
-        /// List for filleing titles and logins.
-        /// </param>
-        public void GetAllUsers(List<string> currentTitles)
-        {
-            SearchResultCollection results;
-            DirectorySearcher directorySearcher;
-            using (DirectoryEntry directoryEntry = new DirectoryEntry(_domainName))
-            {
-                directorySearcher = new DirectorySearcher(directoryEntry);
-                directorySearcher.Filter = "(&(&(&(&(&(&(&(&(objectCategory=user)" +
-               "(!objectClass=contact)" +
-               "(!((userAccountControl:1.2.840.113556.1.4.803:=2)))" +
-               "(!sAMAccountName=**_**)(&(Title=*))))))))))";
-
-                const int PAGE_SIZE = 1000;
-                directorySearcher.PageSize = PAGE_SIZE;
-                directorySearcher.PropertiesToLoad.Add("sAMAccountName");
-                directorySearcher.PropertiesToLoad.Add("title");
-
-                results = directorySearcher.FindAll();
-
-                foreach (SearchResult sr in results)
-                {
-                    if (!sr.Path.Contains("OU=Trash")
-                        && !sr.Path.Contains("OU=HRFutureStaff")
-                        && !sr.Path.Contains("OU=HRMaternity")
-                        && !sr.Path.Contains("OU=HRMobilized"))
-                    {
-                        currentTitles.Add(
-                       string.Format(
-                           $"{sr.Properties["sAMAccountName"][0]};" +
-                           $"{sr.Properties["title"][0]}"));
-                    }
-                }
-            }
-        }
-
         public List<string> GetGroupsByUser(string userName)
         {
-            // "(&(objectCategory = user)(objectClass = user)(cn = {}))"
-
             SearchResultCollection results;
             DirectorySearcher directorySearcher;
             List<string> groups = new List<string>();
@@ -101,7 +58,6 @@ namespace TitleProcessing
                         string groupName =
                             item.Split(',')[0].Replace("CN=", string.Empty).Trim();
                         groups.Add(groupName);
-                        System.Console.WriteLine(groupName);
                     }
                 }
             }

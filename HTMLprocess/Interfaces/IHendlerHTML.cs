@@ -2,5 +2,5 @@
 
 public interface IHendlerHTML
 {
-    List<string> ProccessHTML(string[] htmlDoc);
+    List<string> ProccessHTML();
 }

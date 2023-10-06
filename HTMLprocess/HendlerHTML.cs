@@ -8,9 +8,11 @@ namespace HTMLprocess
 {
     public class HendlerHTML : IHendlerHTML
     {
-        public List<string> ProccessHTML(string[] htmlDoc)
+        public List<string> ProccessHTML()
         {
-            var html = File.ReadAllText("E:\\data.txt", Encoding.UTF8);
+            const string PathHTMLfile = "E:\\messageBody.txt";
+
+            var html = File.ReadAllText(PathHTMLfile, Encoding.UTF8);
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(html);
 
