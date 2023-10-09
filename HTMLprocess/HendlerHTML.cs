@@ -49,8 +49,6 @@ namespace HTMLprocess
                         string.Empty);
 
                 names.Add(name);
-
-                Console.WriteLine(name);
             }
 
             File.WriteAllText(

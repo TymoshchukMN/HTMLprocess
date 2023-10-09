@@ -1,4 +1,11 @@
-﻿using System;
+﻿//////////////////////////////////////////
+// Author : Tymoshchuk Maksym
+// Created On : 09/10/2023
+// Last Modified On :
+// Description: Starter
+// Project: HTMLprocess
+//////////////////////////////////////////
+
 using System.Collections.Generic;
 using HTMLprocess.AD;
 
@@ -15,6 +22,7 @@ namespace HTMLprocess
             LDAP ldap = new LDAP();
 
             List<GroupMember> members = new List<GroupMember>();
+
             foreach (string user in users)
             {
                 var groups = ldap.GetGroupsByUser(user);
@@ -25,10 +33,7 @@ namespace HTMLprocess
                 }
             }
 
-            for (int i = 0; i < members.Count; i++)
-            {
-                GroupProcessing.RemoveUserFromGroup(members[i].UserName, members[i].GroupName);
-            }
+            GroupProcessing.RemoveUserFromGroup(members);
         }
     }
 }
