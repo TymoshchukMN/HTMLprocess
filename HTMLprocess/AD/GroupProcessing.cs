@@ -1,29 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//////////////////////////////////////////
+// Author : Tymoshchuk Maksym
+// Created On : 09/10/2023
+// Last Modified On :
+// Description: Work with LDAP
+// Project: TitleProcessing
+//////////////////////////////////////////
+///
+using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 
 namespace HTMLprocess.AD
 {
     internal class GroupProcessing
     {
-        public void RemoveUserFromGroup(string userId, string groupName)
+        public static void RemoveUserFromGroup(string userId, string groupName)
         {
-            try
+            using (PrincipalContext principalContext = new PrincipalContext(ContextType.Domain))
             {
-                using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, "COMPANY"))
+                using (var user = UserPrincipal.FindByIdentity(principalContext, userId))
                 {
-                    GroupPrincipal group = GroupPrincipal.FindByIdentity(pc, groupName);
-                    group.Members.Remove(pc, IdentityType.UserPrincipalName, userId);
-                    group.Save();
-                }
-            }
-            catch (System.DirectoryServices.DirectoryServicesCOMException E)
-            {
-                //doSomething with E.Message.ToString(); 
+                    GroupPrincipal group = GroupPrincipal.FindByIdentity(principalContext, groupName);
 
+                    var entry = group.GetUnderlyingObject() as DirectoryEntry;
+                    var userEntry = user.GetUnderlyingObject() as DirectoryEntry;
+                    entry.Invoke("Remove", new object[] { userEntry.Path });
+                }
             }
         }
     }

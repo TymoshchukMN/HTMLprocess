@@ -24,6 +24,11 @@ namespace HTMLprocess
                     members.Add(new GroupMember(user, group));
                 }
             }
+
+            for (int i = 0; i < members.Count; i++)
+            {
+                GroupProcessing.RemoveUserFromGroup(members[i].UserName, members[i].GroupName);
+            }
         }
     }
 }

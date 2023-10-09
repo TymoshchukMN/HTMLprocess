@@ -34,6 +34,11 @@ namespace HTMLprocess.AD
 
         #endregion CTORs
 
+        protected string DomainName
+        {
+            get { return _domainName; }
+        }
+
         #region METHODS
 
         public List<string> GetGroupsByUser(string userName)
