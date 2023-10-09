@@ -17,7 +17,7 @@ namespace HTMLprocess
     public class HendlerHTML : IHendlerHTML
     {
         private const string PathHTMLfile = "E:\\messageBody.txt";
-        private string _html;
+        private readonly string _html;
 
         public HendlerHTML()
         {
@@ -26,12 +26,6 @@ namespace HTMLprocess
             {
                 throw new Exception("File messageBody.txt is Empty");
             }
-        }
-
-        public string Html
-        {
-            get { return _html; }
-            private set { _html = value; }
         }
 
         public List<string> ProccessHTML()
@@ -50,12 +44,6 @@ namespace HTMLprocess
 
                 names.Add(name);
             }
-
-            File.WriteAllText(
-                "E:\\test.txt",
-                string.Join(
-                    names.ToString(),
-                    (char)10));
 
             return names;
         }
